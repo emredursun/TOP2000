@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b1e45cdfb52646d6b193c78fc73c089f" Name="Diagram1">
+        <EntityTypeShape EntityType="Top2000Model.Artiest" Width="1.5" PointX="0.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Top2000Model.Lijst" Width="1.5" PointX="6.375" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Top2000Model.Song" Width="1.5" PointX="3.125" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Top2000Model.Top2000Jaar" Width="1.5" PointX="3.125" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="Top2000Model.FK_Song_Artiest" ManuallyRouted="false" />
+        <AssociationConnector Association="Top2000Model.FK_Lijst_Song" ManuallyRouted="false" />
+        <AssociationConnector Association="Top2000Model.FK_Lijst_Top2000Jaar" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

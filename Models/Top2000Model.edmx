@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Top2000Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artiest">
+          <Key>
+            <PropertyRef Name="Artiestid" />
+          </Key>
+          <Property Name="Artiestid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naam" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Afbeelding" Type="nvarchar" MaxLength="100" />
+          <Property Name="Biografie" Type="nvarchar(max)" />
+          <Property Name="Wikipedialink" Type="nvarchar(max)" />
+          <Property Name="AantalSongs" Type="int" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Lijst">
+          <Key>
+            <PropertyRef Name="Songid" />
+            <PropertyRef Name="Top2000jaar" />
+          </Key>
+          <Property Name="Songid" Type="int" Nullable="false" />
+          <Property Name="Top2000jaar" Type="int" Nullable="false" />
+          <Property Name="Positie" Type="int" Nullable="false" />
+          <Property Name="Verschil" Type="int" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="Songid" />
+          </Key>
+          <Property Name="Songid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Artiestid" Type="int" Nullable="false" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Jaar" Type="int" />
+          <Property Name="Songtekst" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Top2000Jaar">
+          <Key>
+            <PropertyRef Name="Jaar" />
+          </Key>
+          <Property Name="Jaar" Type="int" Nullable="false" />
+          <Property Name="Titel" Type="varchar" MaxLength="21" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="FK_Lijst_Song">
+          <End Role="Song" Type="Self.Song" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Lijst" Type="Self.Lijst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Song">
+              <PropertyRef Name="Songid" />
+            </Principal>
+            <Dependent Role="Lijst">
+              <PropertyRef Name="Songid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lijst_Top2000Jaar">
+          <End Role="Top2000Jaar" Type="Self.Top2000Jaar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Lijst" Type="Self.Lijst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Top2000Jaar">
+              <PropertyRef Name="Jaar" />
+            </Principal>
+            <Dependent Role="Lijst">
+              <PropertyRef Name="Top2000jaar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Song_Artiest">
+          <End Role="Artiest" Type="Self.Artiest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Song" Type="Self.Song" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artiest">
+              <PropertyRef Name="Artiestid" />
+            </Principal>
+            <Dependent Role="Song">
+              <PropertyRef Name="Artiestid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fsspTOP2000DefUnlistedSongs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="Currentyear" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fsspTOP2000New" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+          <Parameter Name="FROM" Type="int" Mode="In" />
+          <Parameter Name="TO" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fsspTOP2000ReEntries" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentTop2000Year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fsspTOP2000UnlistedSongs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fsspTOP2000Year" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+          <Parameter Name="AMOUNT" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spImport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ARTIEST" Type="nvarchar" Mode="In" />
+          <Parameter Name="TITEL" Type="nvarchar" Mode="In" />
+          <Parameter Name="JAAR" Type="int" Mode="In" />
+          <Parameter Name="POSITIE" Type="int" Mode="In" />
+          <Parameter Name="TOP2000JAAR" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="Top2000ModelStoreContainer">
+          <EntitySet Name="Artiest" EntityType="Self.Artiest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lijst" EntityType="Self.Lijst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Top2000Jaar" EntityType="Self.Top2000Jaar" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Lijst_Song" Association="Self.FK_Lijst_Song">
+            <End Role="Song" EntitySet="Song" />
+            <End Role="Lijst" EntitySet="Lijst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lijst_Top2000Jaar" Association="Self.FK_Lijst_Top2000Jaar">
+            <End Role="Top2000Jaar" EntitySet="Top2000Jaar" />
+            <End Role="Lijst" EntitySet="Lijst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Song_Artiest" Association="Self.FK_Song_Artiest">
+            <End Role="Artiest" EntitySet="Artiest" />
+            <End Role="Song" EntitySet="Song" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Top2000Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Artiest">
+          <Key>
+            <PropertyRef Name="Artiestid" />
+          </Key>
+          <Property Name="Artiestid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Afbeelding" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Biografie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Wikipedialink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Song" Relationship="Self.FK_Song_Artiest" FromRole="Artiest" ToRole="Song" />
+          <Property Name="AantalSongs" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Lijst">
+          <Key>
+            <PropertyRef Name="Songid" />
+            <PropertyRef Name="Top2000jaar" />
+          </Key>
+          <Property Name="Songid" Type="Int32" Nullable="false" />
+          <Property Name="Top2000jaar" Type="Int32" Nullable="false" />
+          <Property Name="Positie" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Song" Relationship="Self.FK_Lijst_Song" FromRole="Lijst" ToRole="Song" />
+          <NavigationProperty Name="Top2000Jaar1" Relationship="Self.FK_Lijst_Top2000Jaar" FromRole="Lijst" ToRole="Top2000Jaar" />
+          <Property Name="Verschil" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="Songid" />
+          </Key>
+          <Property Name="Songid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Artiestid" Type="Int32" Nullable="false" />
+          <Property Name="Titel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Jaar" Type="Int32" />
+          <Property Name="Songtekst" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Artiest" Relationship="Self.FK_Song_Artiest" FromRole="Song" ToRole="Artiest" />
+          <NavigationProperty Name="Lijst" Relationship="Self.FK_Lijst_Song" FromRole="Song" ToRole="Lijst" />
+        </EntityType>
+        <EntityType Name="Top2000Jaar">
+          <Key>
+            <PropertyRef Name="Jaar" />
+          </Key>
+          <Property Name="Jaar" Type="Int32" Nullable="false" />
+          <Property Name="Titel" Type="String" MaxLength="21" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Lijst" Relationship="Self.FK_Lijst_Top2000Jaar" FromRole="Top2000Jaar" ToRole="Lijst" />
+        </EntityType>
+        <Association Name="FK_Song_Artiest">
+          <End Role="Artiest" Type="Self.Artiest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Song" Type="Self.Song" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artiest">
+              <PropertyRef Name="Artiestid" />
+            </Principal>
+            <Dependent Role="Song">
+              <PropertyRef Name="Artiestid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lijst_Song">
+          <End Role="Song" Type="Self.Song" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Lijst" Type="Self.Lijst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Song">
+              <PropertyRef Name="Songid" />
+            </Principal>
+            <Dependent Role="Lijst">
+              <PropertyRef Name="Songid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lijst_Top2000Jaar">
+          <End Role="Top2000Jaar" Type="Self.Top2000Jaar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Lijst" Type="Self.Lijst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Top2000Jaar">
+              <PropertyRef Name="Jaar" />
+            </Principal>
+            <Dependent Role="Lijst">
+              <PropertyRef Name="Top2000jaar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Top2000Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artiest" EntityType="Self.Artiest" />
+          <EntitySet Name="Lijst" EntityType="Self.Lijst" />
+          <EntitySet Name="Song" EntityType="Self.Song" />
+          <EntitySet Name="Top2000Jaar" EntityType="Self.Top2000Jaar" />
+          <AssociationSet Name="FK_Song_Artiest" Association="Self.FK_Song_Artiest">
+            <End Role="Artiest" EntitySet="Artiest" />
+            <End Role="Song" EntitySet="Song" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lijst_Song" Association="Self.FK_Lijst_Song">
+            <End Role="Song" EntitySet="Song" />
+            <End Role="Lijst" EntitySet="Lijst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lijst_Top2000Jaar" Association="Self.FK_Lijst_Top2000Jaar">
+            <End Role="Top2000Jaar" EntitySet="Top2000Jaar" />
+            <End Role="Lijst" EntitySet="Lijst" />
+          </AssociationSet>
+          <FunctionImport Name="fsspTOP2000DefUnlistedSongs" ReturnType="Collection(Top2000Model.fsspTOP2000DefUnlistedSongs_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Currentyear" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fsspTOP2000New" ReturnType="Collection(Top2000Model.fsspTOP2000New_Result)">
+            <Parameter Name="YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="FROM" Mode="In" Type="Int32" />
+            <Parameter Name="TO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fsspTOP2000ReEntries" ReturnType="Collection(Top2000Model.fsspTOP2000ReEntries_Result)">
+          <Parameter Name="CurrentTop2000Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fsspTOP2000UnlistedSongs" ReturnType="Collection(Top2000Model.fsspTOP2000UnlistedSongs_Result)">
+          <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spImport">
+            <Parameter Name="ARTIEST" Mode="In" Type="String" />
+            <Parameter Name="TITEL" Mode="In" Type="String" />
+            <Parameter Name="JAAR" Mode="In" Type="Int32" />
+            <Parameter Name="POSITIE" Mode="In" Type="Int32" />
+            <Parameter Name="TOP2000JAAR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fsspTOP2000Year" ReturnType="Collection(Top2000Model.fsspTOP2000Year_Result)">
+            <Parameter Name="YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="AMOUNT" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="fsspTOP2000DefUnlistedSongs_Result">
+          <Property Type="String" Name="titel" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="songid" Nullable="false" />
+          <Property Type="String" Name="naam" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="jaar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fsspTOP2000New_Result">
+          <Property Type="Int32" Name="positie" Nullable="false" />
+          <Property Type="String" Name="naam" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="titel" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="jaar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fsspTOP2000ReEntries_Result">
+          <Property Type="Int32" Name="artiestid" Nullable="false" />
+          <Property Type="String" Name="naam" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="titel" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="jaar" Nullable="true" />
+          <Property Type="Int32" Name="top2000jaar" Nullable="false" />
+          <Property Type="Int32" Name="songid" Nullable="false" />
+          <Property Type="Int32" Name="positie" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fsspTOP2000UnlistedSongs_Result">
+          <Property Type="String" Name="titel" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="songid" Nullable="false" />
+          <Property Type="String" Name="naam" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="jaar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fsspTOP2000Year_Result">
+          <Property Type="Int32" Name="POSITIE" Nullable="false" />
+          <Property Type="String" Name="NAAM" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="ARTIESTID" Nullable="false" />
+          <Property Type="String" Name="TITEL" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="JAAR" Nullable="true" />
+          <Property Type="Int32" Name="Verschil" Nullable="true" />
+          <Property Type="Int32" Name="Songid" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Top2000ModelStoreContainer" CdmEntityContainer="Top2000Entities">
+          <EntitySetMapping Name="Artiest">
+            <EntityTypeMapping TypeName="Top2000Model.Artiest">
+              <MappingFragment StoreEntitySet="Artiest">
+                <ScalarProperty Name="AantalSongs" ColumnName="AantalSongs" />
+                <ScalarProperty Name="Artiestid" ColumnName="Artiestid" />
+                <ScalarProperty Name="Naam" ColumnName="Naam" />
+                <ScalarProperty Name="Afbeelding" ColumnName="Afbeelding" />
+                <ScalarProperty Name="Biografie" ColumnName="Biografie" />
+                <ScalarProperty Name="Wikipedialink" ColumnName="Wikipedialink" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lijst">
+            <EntityTypeMapping TypeName="Top2000Model.Lijst">
+              <MappingFragment StoreEntitySet="Lijst">
+                <ScalarProperty Name="Verschil" ColumnName="Verschil" />
+                <ScalarProperty Name="Songid" ColumnName="Songid" />
+                <ScalarProperty Name="Top2000jaar" ColumnName="Top2000jaar" />
+                <ScalarProperty Name="Positie" ColumnName="Positie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Song">
+            <EntityTypeMapping TypeName="Top2000Model.Song">
+              <MappingFragment StoreEntitySet="Song">
+                <ScalarProperty Name="Songid" ColumnName="Songid" />
+                <ScalarProperty Name="Artiestid" ColumnName="Artiestid" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="Jaar" ColumnName="Jaar" />
+                <ScalarProperty Name="Songtekst" ColumnName="Songtekst" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Top2000Jaar">
+            <EntityTypeMapping TypeName="Top2000Model.Top2000Jaar">
+              <MappingFragment StoreEntitySet="Top2000Jaar">
+                <ScalarProperty Name="Jaar" ColumnName="Jaar" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="fsspTOP2000DefUnlistedSongs" FunctionName="Top2000Model.Store.fsspTOP2000DefUnlistedSongs">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Top2000Model.fsspTOP2000DefUnlistedSongs_Result">
+                <ScalarProperty Name="titel" ColumnName="titel" />
+                <ScalarProperty Name="songid" ColumnName="songid" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+                <ScalarProperty Name="jaar" ColumnName="jaar" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fsspTOP2000New" FunctionName="Top2000Model.Store.fsspTOP2000New">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Top2000Model.fsspTOP2000New_Result">
+                <ScalarProperty Name="positie" ColumnName="positie" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+                <ScalarProperty Name="titel" ColumnName="titel" />
+                <ScalarProperty Name="jaar" ColumnName="jaar" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fsspTOP2000ReEntries" FunctionName="Top2000Model.Store.fsspTOP2000ReEntries">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Top2000Model.fsspTOP2000ReEntries_Result">
+                <ScalarProperty Name="artiestid" ColumnName="artiestid" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+                <ScalarProperty Name="titel" ColumnName="titel" />
+                <ScalarProperty Name="jaar" ColumnName="jaar" />
+                <ScalarProperty Name="top2000jaar" ColumnName="top2000jaar" />
+                <ScalarProperty Name="songid" ColumnName="songid" />
+                <ScalarProperty Name="positie" ColumnName="positie" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fsspTOP2000UnlistedSongs" FunctionName="Top2000Model.Store.fsspTOP2000UnlistedSongs">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Top2000Model.fsspTOP2000UnlistedSongs_Result">
+                <ScalarProperty Name="titel" ColumnName="titel" />
+                <ScalarProperty Name="songid" ColumnName="songid" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+                <ScalarProperty Name="jaar" ColumnName="jaar" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spImport" FunctionName="Top2000Model.Store.spImport" />
+          <FunctionImportMapping FunctionImportName="fsspTOP2000Year" FunctionName="Top2000Model.Store.fsspTOP2000Year">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Top2000Model.fsspTOP2000Year_Result">
+                <ScalarProperty Name="POSITIE" ColumnName="POSITIE" />
+                <ScalarProperty Name="NAAM" ColumnName="NAAM" />
+                <ScalarProperty Name="ARTIESTID" ColumnName="ARTIESTID" />
+                <ScalarProperty Name="TITEL" ColumnName="TITEL" />
+                <ScalarProperty Name="JAAR" ColumnName="JAAR" />
+                <ScalarProperty Name="Verschil" ColumnName="Verschil" />
+                <ScalarProperty Name="Songid" ColumnName="Songid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
