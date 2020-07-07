@@ -1,0 +1,146 @@
+﻿@model PagedList.IPagedList<Top2000.Models.fsspTOP2000Year_Result>
+
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Jaarlijst " + @ViewBag.year;
+    <h2 class="top2000titel">Top 2000 van @ViewBag.year</h2>
+}
+
+@using (Html.BeginForm(FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <form>
+                @Html.DropDownList("selectYear", null, htmlAttributes: new { @class = "form-control", onchange = @"form.submit();" })
+            </form>
+        </div>
+        <div class="col-md-6" align="right">
+            <form>
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as String, new { placeholder = "Artiestnaam...", @class = @"form.submit();" })              
+                <button class="btn btn-danger">Zoek</button>
+            </form>
+        </div>
+    </div>
+}
+
+
+
+<table class="table table-borderless " id="yearlist">
+    <thead>
+
+        <tr>
+
+            <th>
+
+
+
+                @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().POSITIE).ToString(), "Yearlist",
+
+                   
+                    new
+                    {
+                        sortOrder = ViewBag.NameSortParm == "positie_desc" ? "" : "positie_desc",
+                        currentFilter = ViewBag.CurrentFilter,
+                        searchString = ViewBag.CurrentFilter != null
+                        || ViewBag.CurrentFilter.ToString() == "" ? ViewBag.CurrentFilter : ""
+                    }
+                    , new { @class = "white" }
+
+                    )
+                <i class="glyphicon glyphicon-triangle-bottom"></i>
+            </th>
+            <th>
+                <!--Lege kolom-->
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().TITEL).ToString(), "Yearlist",
+                    new
+                    {
+                        sortOrder = ViewBag.NameSortParm == "title_desc" ? "title_ascc" : "title_desc",
+                        currentFilter = ViewBag.CurrentFilter,
+                        searchString = ViewBag.CurrentFilter != null
+                        || ViewBag.CurrentFilter.ToString() == "" ? ViewBag.CurrentFilter : ""
+                    }
+                        , new { @class = "white" }
+                        )
+                <i class="glyphicon glyphicon-triangle-bottom"></i>
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().NAAM).ToString(), "Yearlist",
+                    new
+                    {
+                        sortOrder = ViewBag.NameSortParm == "name_desc" ? "name_asc" : "name_desc",
+                        currentFilter = ViewBag.CurrentFilter,
+                        searchString = ViewBag.CurrentFilter != null
+                        || ViewBag.CurrentFilter.ToString() == "" ? ViewBag.CurrentFilter : ""
+                    }
+                        , new { @class = "white" }
+                    )
+                <i class="glyphicon glyphicon-triangle-bottom"></i>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().JAAR)
+            </th>
+            <th></th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr class="listRow">
+
+                <td class="positie">
+                    @Html.DisplayFor(modelItem => item.POSITIE)
+                </td>
+                <td class="differenceCell">
+                    @Html.DisplayFor(modelItem => item.Verschil)
+                </td>
+                <td class="songTitel">
+
+                    <a href="/Song/Details/@Html.DisplayFor(modelItem => item.Songid)"> @Html.DisplayFor(modelItem => item.TITEL) </a>
+                </td>
+                <td class="artiestNaam">
+
+
+                    <a href="/Artiest/Details/@Html.DisplayFor(modelItem => item.ARTIESTID)"> @Html.DisplayFor(modelItem => item.NAAM) </a>
+
+                </td>
+
+                <td class="songJaar">
+                    @Html.DisplayFor(modelItem => item.JAAR)
+                </td>
+
+            </tr>
+
+        }
+
+    </tbody>
+
+    <tfoot>
+
+
+        <tr>
+            <!--Colspan meerdere cellen in dit geval 4 samenvoegen tot 1 cel-->
+            <td colspan="4">
+                Gevonden resultaten: @ViewBag.countResults
+            </td>
+
+        </tr>
+
+    </tfoot>
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Yearlist",
+    new { page, sortOrder = ViewBag.CurrentSort, searchString = ViewBag.CurrentFilter != null || ViewBag.CurrentFilter.ToString() == "" ? ViewBag.CurrentFilter : "", currentFilter = ViewBag.CurrentFilter }))
+
+

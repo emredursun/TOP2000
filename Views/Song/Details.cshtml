@@ -1,0 +1,89 @@
+﻿@model Top2000.Models.Song
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div>
+    <h2>@Model.Titel</h2>
+    <h3> @Html.DisplayFor(model => model.Artiest.Naam)</h3>
+    <h4>  @Html.DisplayFor(model => model.Jaar)</h4>
+
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            @{ string imgsource = Model.Artiest.Afbeelding == null ? "https://via.placeholder.com/150" : Model.Artiest.Afbeelding; }
+            <img src=@imgsource alt="@Model.Titel" width="150" height="150" class="img-responsive" />
+        </div>
+        <div class="col-md-8">
+            <h2>Noteringen</h2>
+            <div id="chart"></div>
+
+            <script type="text/javascript">
+
+    window.onload = function () {
+  
+
+            var chart = new CanvasJS.Chart("chart", {
+                theme: "light2",
+                animationEnabled: true,
+                backgroundColor: "#000",
+               
+                axisY: {
+                    reversed: true,
+                    valueFormatString: "#####",
+                },
+                axisX: {
+                    valueFormatString: "#####",
+                },
+                data: [
+                {
+                    type: "line", //change type to bar, line, area, pie, etc
+
+                        xValueFormatString: "#####",
+                        xValueType: "date",
+                        dataPoints: @Html.Raw(ViewBag.DataPoints),
+                       // lineColor: "#d8151b",
+                }
+                ]
+            });
+
+            chart.render();
+
+        };
+            </script>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-8">
+            <h3>Lyrics</h3>
+            <div class="pre-scrollable">
+                @Html.DisplayFor(model => model.Songtekst)
+            </div>
+        </div>
+        <div class="col-md-4">
+            
+        </div>
+    </div>
+</div>
+
+
+<p>
+
+
+    <a href="@Url.Action("Index")" class="btn btn-small btn-danger">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+        <span class="bold">Lijst liedjes</span>
+    </a>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a href="@Url.Action("Edit", new { id = Model.Songid })" class="btn btn-small btn-danger">
+            <i class="glyphicon glyphicon-edit"></i>
+            <span class="bold">Bewerken</span>
+        </a>
+    }
+</p>

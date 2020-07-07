@@ -1,0 +1,71 @@
+﻿@model Top2000.Models.Artiest
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.Naam</h2>
+<br />
+<div>
+    <h4>Artiest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Afbeelding)
+        </dt>
+
+        <dd>
+            @{ string imgsource = Model.Afbeelding == null ? "https://via.placeholder.com/200/222.png/d8151b" : Model.Afbeelding.ToString(); }
+            <img src=@imgsource alt="@Html.DisplayFor(modelItem => Model.Naam) album cover" class="img-responsive" width="200" height="200" />
+
+<dt>
+            @Html.DisplayNameFor(model => model.Biografie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Biografie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Wikipedialink)
+        </dt>
+
+        <dd>
+            <a href="@Html.DisplayFor(model => model.Wikipedialink)" target="_blank" rel="noopener noreferrer">@Html.DisplayFor(model => model.Naam) op wikipedia</a>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AantalSongs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AantalSongs).ToString()
+        </dd>
+
+    </dl>
+</div>
+<p>
+
+
+    <a href="@Url.Action("Index")" class="btn btn-small btn-danger">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+        <span class="bold">Lijst artiesten</span>
+    </a>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a href="@Url.Action("Edit", new { id = Model.Artiestid })" class="btn btn-small btn-danger">
+            <i class="glyphicon glyphicon-edit"></i>
+            <span class="bold">Bewerken</span>
+        </a>
+    }
+</p>
