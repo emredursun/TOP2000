@@ -1,0 +1,463 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #222;
+    background: url('../Images/musicbackground2.jpg') no-repeat center center fixed;
+    color: white;   
+}
+
+
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+    color: black;
+}
+
+<<<<<<< Updated upstream
+=======
+
+.header-img {
+    background-image: url('../Images/Top2000.png');
+    background-position: center;
+    margin: auto;
+}
+
+.header-img img {
+    width: 100%;
+}
+
+.img-logo {
+    margin-top: 15px;
+    max-width: 200px;
+    margin-right: 20px;
+}
+
+.navbar-inverse {
+    background-image: linear-gradient(#000, #444);
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: white;
+        font-size: 12px;
+        font-family: musicFont3;
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: white;
+        font-family: musicFont3;
+    }
+
+
+.top2000titel {
+    color: white;
+    font-family: musicFont2;
+    font-size: 50px;
+    text-align: center;
+}
+
+.top2000titel_a {
+    font-size: 1.9em;
+}
+
+@font-face {
+    font-family: 'musicFont3';
+    src: url('../Fonts/crimesyndicate.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'musicFont2';
+    src: url('../Fonts/crimesyndicate3d.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'musicFont1';
+    src: url('../Fonts/d2k.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'musicFont';
+    src: url('../Fonts/AMADEUS_.TTF') format('truetype');
+}
+
+/*artistlist */
+#artistlist {
+    margin-top: 10px;
+    background: white;
+    color: black;
+}
+
+    #artistlist th {
+        background: red;
+        color: white;
+    }
+
+    #artistlist a {
+        text-decoration: none;
+        color: #222;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+        #artistlist a:hover {
+            text-decoration: none;
+            color: red;
+        }
+
+/*Songlist */
+#songlist {
+    margin-top: 10px;
+    background: white;
+    color: black;
+}
+
+    #songlist th {
+        background: red;
+        color: white;
+    }
+
+    #songlist a {
+        text-decoration: none;
+        color: #222;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+        #songlist a:hover {
+            text-decoration: none;
+            color: red;
+        }
+
+
+/* Yearlist */
+#yearlist {
+    margin-top: 10px;
+    background: white;
+    color: black;
+}
+
+    #yearlist th {
+        background: red;
+        color: white;
+    }
+
+    #yearlist td {
+        vertical-align: middle;
+    }
+
+    #yearlist a {
+        text-decoration: none;
+        color: #222;
+        cursor: pointer;
+    }
+
+        #yearlist a:hover {
+            text-decoration: none;
+            color: red;
+        }
+
+
+.differenceCell {
+    background: white;
+    color: #222;
+    border-right: 2px solid #222;
+    text-align: center;
+    font-weight: bold;
+}
+
+.ourRed {
+    color: #d8151b;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.blue {
+    color: dodgerblue;
+}
+
+.white {
+    color: white !important;
+}
+
+.differenceCell.orange {
+    color: darkorange;
+}
+
+.differenceCell.black {
+    color: black;
+}
+
+.positie {
+    text-align: center;
+    background: black;
+    font-size: 2em;
+    color: white;
+}
+
+.songTitel {
+    font-weight: bold;
+    color: #222;
+}
+
+.tableBorder {
+    border: 5px solid black;
+}
+
+/* media queries */
+@media only screen and (max-width: 600px) {
+
+    .top2000titel {
+        font-size: 20px;
+    }
+}
+
+.container-contact {
+}
+
+    .container-contact h1 {
+        color: white;
+    }
+
+.text-block1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 350px;
+    
+}
+
+    .text-block1 h1 {
+        color: white;
+        font-size: 1.5em;
+        font-family: musicFont3;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .text-block1 a {
+        color: #98c4d4;
+    }
+
+    .text-block1 p {
+        color: white;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+.text-block2 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 350px;
+}
+
+    .text-block2 h1 {
+        color: white;
+        font-size: 1.5em;
+        font-family: musicFont3;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .text-block2 p {
+        color: white;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+.text-block3 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 350px;
+}
+
+    .text-block3 h1 {
+        color: white;
+        font-size: 1.5em;
+        font-family: musicFont3;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .text-block3 p {
+        color: white;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .text-block3 a {
+        color: #98c4d4;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+.intro-block {
+
+    margin-top: 50px;
+    padding-top: 5px;
+}
+
+    .intro-block h1 {
+        color: white;
+        font-family: musicFont3;
+        font-size: 2.5em;
+        text-align: center;
+    }
+
+    .intro-block p {
+        color: white;
+        padding: 25px 50px 25px 50px;
+    }
+
+.info-block{
+
+}
+
+.info-block h1{
+    
+    color: white;
+    font-family: musicFont2;
+    font-size: 5em;
+    text-align: center;
+}
+
+.info-block1 {
+    margin-top: 10px;
+    padding-top: 5px;
+    background-color: #222;
+    background-image: url('../../Images/mark.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 115px;
+}
+    .info-block1 h1 {
+        margin-top: 10px;
+        font-family: musicFont3;
+        text-align: left;
+        padding-left: 20px;
+        
+    }
+        .info-block1 p {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+        }
+
+.info-block2 {
+    margin-top: 10px;
+    padding-top: 5px;
+    background-color: #d8151b;
+    background-image: url('../../Images/rafiq.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 125px;
+}
+    .info-block2 h1 {
+        margin-top: 10px;
+        font-family: musicFont3;
+        text-align: left;
+        padding-left: 20px;
+    }
+        .info-block2 p {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+        }
+
+.info-block3 {
+    padding-top: 5px;
+    background-color: #d8151b;
+    background-image: url('../../Images/govert.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 125px;
+}
+    .info-block3 h1 {
+        margin-top: 10px;
+        font-family: musicFont3;
+        text-align: left;
+        padding-left: 20px;
+    }
+        .info-block3 p {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            
+        }
+
+.info-block4 {
+    padding-top: 5px;
+    background-color: #222;
+    background-image: url('../../Images/emre.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 125px;
+}
+    .info-block4 h1 {
+        margin-top: 10px;
+        font-family: musicFont3;
+        text-align: left;
+        padding-left: 20px;
+    }
+        .info-block4 p {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+        }
+
+.info-block5 {
+    padding-top: 5px;
+    background-color: #222;
+}
+    .info-block5 h1 {
+        margin-top: 10px;
+        font-family: musicFont3;
+        text-align: left;
+        padding-left: 20px;
+    }
+        .info-block5 p {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+        
+        }
+
+.info-block6 {
+    padding-top: 5px;
+    background-color: #d8151b;
+    
+}
+
+    .info-block6 h1 {
+        margin-top: 10px;
+        font-family: musicFont3;
+        text-align: left;
+        padding-left: 20px;
+    }
+
+        .info-block6 p {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+        }
+            
